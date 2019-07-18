@@ -7,11 +7,10 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app' , 'BMI Calculator');
 ?>
 <div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Yii::t('app', 'Signup') ?></h1>
 
     <p>Please fill out the following fields to signup:</p>
 
