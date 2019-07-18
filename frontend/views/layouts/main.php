@@ -50,10 +50,11 @@ AppAsset::register($this);
     } else {
         $menuItems = [
             ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+            ['label' => Yii::t('app', 'Show historical'), 'url' => ['/site/show']],
             '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->name . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

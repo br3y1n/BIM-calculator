@@ -2,6 +2,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\VarDumper;
 use yii\base\Model;
 use common\models\User;
 
@@ -10,9 +11,11 @@ use common\models\User;
  */
 class SignupForm extends Model
 {
-    public $username;
     public $email;
     public $password;
+    public $confirmPassword;
+    public $name;
+    public $lastName;
 
 
     /**
@@ -21,10 +24,13 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['name', 'required'],
+            ['name', 'string', 'max' => 255],
+            ['name', 'match', 'pattern' => '/^[a-zA-Z ñÑ]*$/', 'message' => ' {attribute} only supports alphabetic values ​​without accentuation'],
+
+            ['lastName', 'required'],
+            ['lastName', 'string', 'max' => 255],
+            ['lastName', 'match', 'pattern' => '/^[a-zA-Z ñÑ]*$/', 'message' => ' {attribute} only supports alphabetic values ​​without accentuation'],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -34,6 +40,8 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            ['confirmPassword', 'required'],
+            ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match"],
         ];
     }
 
@@ -49,8 +57,9 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->username = $this->username;
         $user->email = $this->email;
+        $user->name = $this->name;
+        $user->last_name = $this->lastName;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
@@ -71,9 +80,9 @@ class SignupForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::t('app', 'BMI Calculator - Register')])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject(Yii::t('app', 'Account registration at ') . Yii::t('app', 'BMI Calculator'))
             ->send();
     }
 }
