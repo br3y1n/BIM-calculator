@@ -1,6 +1,6 @@
 <?php
 return [
-    'language' => 'es',
+    'language' => 'en',
     'sourceLanguage' => 'en-US',
     'name' => 'Breyin',
     'aliases' => [
