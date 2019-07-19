@@ -13,6 +13,10 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use yii\helpers\VarDumper;
+use common\models\User;
+use frontend\models\BodyMassIndex;
+use yii\data\ActiveDataProvider;
 
 
 /**
@@ -74,8 +78,60 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $id = Yii::$app->user->identity->id;
+        $email = Yii::$app->user->identity->email;
+        return $this->render('index', ['id' => $id, 'email' => $email]);
+    }
 
-        return $this->render('index');
+       /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionCreate()
+    {   
+        $modelBmi = new BodyMassIndex();
+
+        if(isset($_POST['id_user']) && isset($_POST['email'])){
+
+            $userExist = User::find()->where(['id' => $_POST['id_user'], 'email' => $_POST['email']] )->one();
+
+            if(!empty($userExist)){
+
+                $modelPost['BodyMassIndex'] = $_POST;
+                $modelBmi->load($modelPost);
+
+                if($modelBmi->save())
+                    echo \yii\bootstrap\Alert::widget([
+                            'options' => [
+                                'class' => 'alert-success',
+                            ],
+                            'body' => Yii::t('app' , 'Successful registration!'),
+                    ]);
+                else 
+                    echo \yii\bootstrap\Alert::widget([
+                        'options' => [
+                            'class' => 'alert-danger',
+                        ],
+                        'body' => Yii::t('app' , 'Error!'),
+                    ]);                
+            }else
+                echo \yii\bootstrap\Alert::widget([
+                    'options' => [
+                        'class' => 'alert-danger',
+                    ],
+                    'body' => Yii::t('app' , 'Error!'),
+                ]);
+    
+        }else{
+            echo \yii\bootstrap\Alert::widget([
+                'options' => [
+                    'class' => 'alert-danger',
+                ],
+                'body' => Yii::t('app' , 'Error!'),
+            ]);
+        }
+        
     }
 
     /**
@@ -85,8 +141,15 @@ class SiteController extends Controller
      */
     public function actionShow()
     {
+        $id = Yii::$app->user->identity->id;
+        $dataProvider = new ActiveDataProvider([
+            'query' => BodyMassIndex::find()->where(['id_user'=>$id])->orderBy(['registration_date'=>SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]); 
 
-        return $this->render('index');
+        return $this->render('show',['dataProvider' => $dataProvider]);
     }
 
     /**

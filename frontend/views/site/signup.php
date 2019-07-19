@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = Yii::t('app' , 'BMI Calculator');
+$this->title = Yii::t('app' , 'Signup');
 ?>
 <div class="site-signup">
     <h1><?= Yii::t('app', 'Signup') ?></h1>
