@@ -49,7 +49,7 @@ $('#calculate').click(function(){
 
         $.ajax({
             data:  parametros, 
-            url:   './index.php?r=site%2Fcreate',
+            url:   './create',
             type:  'post', 
             success:  function (response) {
                 $("body > div.wrap > div.container > .site-index > .jumbotron > #calculate-form").prepend(response);
