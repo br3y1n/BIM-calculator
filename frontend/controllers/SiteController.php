@@ -18,7 +18,6 @@ use common\models\User;
 use frontend\models\BodyMassIndex;
 use yii\data\ActiveDataProvider;
 
-
 /**
  * Site controller
  */
@@ -32,10 +31,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'index', 'show'],
+                'only' => ['logout', 'signup', 'index', 'show', 'setLanguage'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'setLanguage'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -77,7 +76,7 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {  
         $id = Yii::$app->user->identity->id;
         $email = Yii::$app->user->identity->email;
         return $this->render('index', ['id' => $id, 'email' => $email]);
@@ -302,4 +301,22 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    /**
+     * create a new Cookie
+     *
+     * @return mixed
+     */
+    public function actionSetLanguage() {
+
+        if(isset($_POST['Language'])){
+            $cookies = Yii::$app->response->cookies;
+        
+            $cookies->add(new \yii\web\Cookie([
+                'name' => 'Language',
+                'value' => $_POST['Language'],
+            ]));
+        }
+    }
+    
 }

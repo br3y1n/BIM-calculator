@@ -46,5 +46,12 @@ return [
             ],
         ],
     ],
+    
+    'bootstrap' => [
+        [
+            'class' => 'common\components\LangSelect',
+        ],
+    ],
+
     'params' => $params,
 ];

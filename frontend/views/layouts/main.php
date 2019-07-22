@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -62,12 +63,28 @@ AppAsset::register($this);
             
         ];
     }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
+    ]); 
+
+    echo Nav::widget([
+        'items' => [
+            [
+                'label' => Yii::$app->language,
+                'items' => [
+                     ['label' => 'ES', 'url' => '#', 'options' => ['id' => 'ES']],
+                     '<li class="divider"></li>',
+                     ['label' => 'EN', 'url' => '#', 'options' => ['id' => 'EN']],
+                ],
+            ],
+        ],
+        'options' => ['class' =>'navbar-nav navbar-left'],
     ]);
-    NavBar::end();
-    ?>
+  
+    NavBar::end(); ?>
+   
 
     <div class="container">
         <?= Breadcrumbs::widget([
@@ -90,3 +107,37 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
+
+<script>
+
+$('#ES').click(function(){
+
+    let language = {
+        "Language" : 'ES'
+    };
+    setLanguage(language);
+})
+
+$('#EN').click(function(){
+
+    let language = {
+        "Language" : 'EN'
+    };
+    setLanguage(language);
+})
+
+function setLanguage(language){
+    $.ajax({
+                data:  language, 
+                url:   './set-language',
+                type:  'post', 
+                success:  function (response) {
+                    location.reload();
+                },
+                error: function(response){
+                    alert('Error!');
+                }
+            });
+}
+
+</script>

@@ -15,7 +15,7 @@ $this->title = Yii::t('app' , 'BMI Calculator');
     <p>Please fill out the following fields to login:</p>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-md-5">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
@@ -29,11 +29,11 @@ $this->title = Yii::t('app' , 'BMI Calculator');
                     <br>
                     Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
                 </div>
-
+                
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                 </div>
-
+                
             <?php ActiveForm::end(); ?>
         </div>
     </div>
