@@ -25,10 +25,21 @@ class PasswordResetRequestForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => Yii::t('app', 'There is no user with this email address.')
             ],
         ];
     }
+
+         /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('app', 'Email'),
+        ];
+    }
+
 
     /**
      * Sends an email with a link, for resetting the password.
