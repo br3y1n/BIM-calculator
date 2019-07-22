@@ -41,7 +41,21 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             ['confirmPassword', 'required'],
-            ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match"],
+            ['confirmPassword', 'compare', 'compareAttribute'=>'password', 'message'=> Yii::t('app', "Passwords don't match")],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name' => Yii::t('app', 'Name'),
+            'lastName' => Yii::t('app', 'Last Name'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'confirmPassword' => Yii::t('app', 'Confirm Password'),
         ];
     }
 

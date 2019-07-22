@@ -11,7 +11,7 @@ class LangSelect implements BootstrapInterface
         $preferredLanguage = isset($app->request->cookies['Language']) ? (string)$app->request->cookies['Language'] : null;
         
         if (empty($preferredLanguage)) {
-            $preferredLanguage = 'en';
+            $preferredLanguage = 'EN';
         }
 
         $app->language = $preferredLanguage;

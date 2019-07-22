@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\web\View;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -103,41 +104,15 @@ AppAsset::register($this);
     </div>
 </footer>
 
+<?php $this->registerJsFile(
+    '@web/js/setLanguage.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+     View::POS_END,
+); ?>
+
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
 
-<script>
 
-$('#ES').click(function(){
-
-    let language = {
-        "Language" : 'ES'
-    };
-    setLanguage(language);
-})
-
-$('#EN').click(function(){
-
-    let language = {
-        "Language" : 'EN'
-    };
-    setLanguage(language);
-})
-
-function setLanguage(language){
-    $.ajax({
-                data:  language, 
-                url:   './set-language',
-                type:  'post', 
-                success:  function (response) {
-                    location.reload();
-                },
-                error: function(response){
-                    alert('Error!');
-                }
-            });
-}
-
-</script>
